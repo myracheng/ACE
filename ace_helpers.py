@@ -16,7 +16,8 @@ from torch.autograd import grad
 from torchvision.models import Inception3
 import torch
 import torch.nn as nn
-from pytorch_wrapper import ModelWrapper
+from pytorch_wrapper import InceptionV3Wrapper
+from pytorch_wrapper import *
 
 def make_model(sess, model_to_run, model_path, 
                labels_path, randomize=False,):
@@ -49,7 +50,7 @@ def make_model(sess, model_to_run, model_path,
     v3.fc = nn.Linear(2048, 8142)
     v3.aux_logits = True
     v3.load_state_dict(temp_model['state_dict'])
-    mymodel = ModelWrapper(v3)
+    mymodel = InceptionV3Wrapper(labels_path=labels_path,v3model=v3)
   else:
     raise ValueError('Invalid model name')
   if randomize:  # randomize the network!
