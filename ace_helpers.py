@@ -12,6 +12,11 @@ from skimage.segmentation import mark_boundaries
 from sklearn import linear_model
 from sklearn.model_selection import cross_val_score
 import tensorflow as tf
+from torch.autograd import grad
+from torchvision.models import Inception3
+import torch
+import torch.nn as nn
+from pytorch_wrapper import ModelWrapper
 
 def make_model(sess, model_to_run, model_path, 
                labels_path, randomize=False,):
@@ -37,6 +42,14 @@ def make_model(sess, model_to_run, model_path,
     # common_typos_disable
     mymodel = model.GoolgeNetWrapper_public(
         sess, model_saved_path=model_path, labels_path=labels_path)
+  elif model_to_run == 'iNat':
+    temp_model=torch.load("iNat_2018_InceptionV3.pth.tar",map_location='cpu')
+    # mymodel = ModelWrapper(temp_model)
+    v3 = Inception3()
+    v3.fc = nn.Linear(2048, 8142)
+    v3.aux_logits = True
+    v3.load_state_dict(temp_model['state_dict'])
+    mymodel = ModelWrapper(v3)
   else:
     raise ValueError('Invalid model name')
   if randomize:  # randomize the network!
