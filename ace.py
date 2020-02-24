@@ -197,7 +197,7 @@ class ConceptDiscovery(object):
     if param_dict is None:
       param_dict = {}
     if method == 'slic':
-      n_segmentss = param_dict.pop('n_segments', [15, 50, 80])
+      n_segmentss = param_dict.pop('n_segments', [5])
       n_params = len(n_segmentss)
       compactnesses = param_dict.pop('compactness', [20] * n_params)
       sigmas = param_dict.pop('sigma', [1.] * n_params)
