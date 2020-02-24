@@ -63,6 +63,7 @@ class ModelWrapper(object):
 
         self.model.to(device)
         inputs = torch.FloatTensor(examples).permute(0, 3, 1, 2).to(device)
+        print(inputs.size())
         self.model.eval()
         self.model(inputs)
         acts = bn_activation.detach().cpu().numpy()
