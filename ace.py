@@ -423,6 +423,14 @@ class ConceptDiscovery(object):
       concept_number, bn_dic['concepts'] = 0, []
       for i in range(bn_dic['label'].max() + 1):
         label_idxs = np.where(bn_dic['label'] == i)[0]
+        ls = []
+        for l in label_idxs:
+          if l > len(self.image_numbers):
+            continue
+          else:
+            ls.append(l)
+        # print(ls)
+        label_idxs = np.array(ls)
         if len(label_idxs) > self.min_imgs:
           concept_costs = bn_dic['cost'][label_idxs]
           concept_idxs = label_idxs[np.argsort(concept_costs)[:self.max_imgs]]
