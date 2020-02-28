@@ -46,10 +46,7 @@ def make_model(sess, model_to_run, model_path,
   elif model_to_run == 'iNat':
     temp_model=torch.load("iNat_2018_InceptionV3.pth.tar",map_location='cpu')
     # mymodel = ModelWrapper(temp_model)
-    v3 = Inception3()
-    v3.fc = nn.Linear(2048, 8142)
-    v3.aux_logits = True
-    v3.load_state_dict(temp_model['state_dict'])
+    v3 = torch.load('inat_model')
     mymodel = InceptionV3Wrapper(labels_path=labels_path,v3model=v3)
   else:
     raise ValueError('Invalid model name')
